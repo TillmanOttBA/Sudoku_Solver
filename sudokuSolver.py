@@ -1,7 +1,9 @@
-#Löst das Sudoku, indem eindeutige Lösungen gefunden werden
+#Solves the Sudoku by entering all the numbers that can be uniquely determined. May not find a solution for difficult Sudoku puzzles
 def solveEasy(sudoku):
     foundSolution = True
+    itterationCounter = 0
     while foundSolution:
+        print("Starting with itteration " + str(itterationCounter))
         possibilityMap = createPosibilityMap(sudoku)
         foundSolution = False
         for rowBlock in range(3):
@@ -21,7 +23,7 @@ def solveEasy(sudoku):
                                     foundSolution = True
     return sudoku
 
-#Erzeugt ein Array, dass für jedes Zahlenfeld angibt, welche Zahlen möglich sind
+#Creates an array that indicates for each field which numbers are possible
 def createPosibilityMap(sudoku):
     possibilityMap = [[[]]]
     for row in range(len(sudoku)):
@@ -29,7 +31,7 @@ def createPosibilityMap(sudoku):
         for col in range(len(sudoku[row])):
             possibilityMap[row].append([])
             possibilityMap[row][col].append(0)
-            #Berechne, in welchem Block sich das aktuelle Feld befindet
+            #Calculate in wich block the actual field is located
             rowBlock = int((row - row % 3) / 3) 
             colBlock = int((col - col % 3) / 3)
             for number in range(1,10):
@@ -61,7 +63,7 @@ def createPosibilityMap(sudoku):
                     possibilityMap[row][col].append(True)
     return possibilityMap
 
-#Gibt das Sudoku in der Konsole aus
+#Prints the sudoku in the console
 def printSudoku(sudoku, *zeroReplacer):
     if zeroReplacer:
         newRow = []
@@ -85,6 +87,7 @@ def printSudoku(sudoku, *zeroReplacer):
             actRow = actRow + 1
         print("┼─────────┼─────────┼─────────┼")
 
+#Allows the user to enter the Sudoku row by row
 def inputByRow():
     sudoku = [[]]
     for row in range(9):
@@ -108,10 +111,6 @@ def inputByRow():
         printSudoku(sudoku, " ")
     return sudoku
 
-
-
-#easy: sudoku = [[6,0,0,4,1,0,3,0,8],[8,0,5,0,6,3,4,0,0],[7,3,0,0,2,0,0,0,1],[0,0,6,1,5,7,0,0,2],[5,7,0,0,0,4,1,0,6],[1,2,0,0,9,6,0,4,0],[3,0,0,0,0,0,0,8,0],[0,6,9,0,3,0,0,5,0],[0,0,7,0,4,0,0,1,0]]
-#hard: sudoku = [[0,0,0,0,0,1,0,4,0],[0,3,0,5,0,0,0,2,0],[8,7,1,0,0,0,0,0,0],[0,0,9,0,6,7,2,0,0],[6,0,3,0,9,0,7,0,0],[0,4,7,0,2,0,3,0,0],[9,1,0,0,0,0,0,0,6],[0,6,0,0,0,0,8,0,5],[0,0,0,0,7,4,0,0,0]]
 sudoku = inputByRow()
 sudoku = solveEasy(sudoku)
 printSudoku(sudoku, " ")
